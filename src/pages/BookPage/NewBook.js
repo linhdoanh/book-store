@@ -14,6 +14,7 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 function NewBook() {
+  const token = localStorage.getItem('token');
   const [form] = Form.useForm();
   const [dataCate, SetDataCate] = useState([{ data: [] }]);
   const [dataPub, SetDataPub] = useState([{ data: [] }]);
@@ -136,7 +137,10 @@ function NewBook() {
 
     const response = await fetch("https://localhost:44301/api/books/book", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers :{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
       body: JSON.stringify(addData),
     });
     const dataRes = await response.json();
@@ -150,7 +154,10 @@ function NewBook() {
         console.log("CreateBookImage: ", createBookImage);
         return fetch("https://localhost:44301/api/book-images/book-image", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers :{
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
           body: JSON.stringify(createBookImage),
         });
       });

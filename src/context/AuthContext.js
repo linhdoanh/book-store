@@ -23,7 +23,7 @@ export const AuthContextProvider = ({ children }) => {
             ).toString("ascii");
             const payloadObj = JSON.parse(payloadJson);
             localStorage.setItem("user", JSON.stringify(payloadObj));
-            // localStorage.setItem("token", idTokenReturn.data.data);
+            localStorage.setItem("token", idTokenReturn.data.data);
             setUser(payloadObj);
           } catch (error) {
             console.log(error);

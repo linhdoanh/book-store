@@ -69,6 +69,7 @@ function applySortFilter(array, comparator, query) {
 
 
 export default function OrderPage() {
+  const token = localStorage.getItem('token');
 
   const [page, setPage] = useState(0);
 
@@ -93,7 +94,11 @@ export default function OrderPage() {
   //modal create button
 
   useEffect(() => {
-    fetch(APIUrl+"?page=1&pageSize=25")
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+    fetch(APIUrl+"?page=1&pageSize=25", {headers})
       .then((response) => {
         if (!response.ok) {
           throw new Error(

@@ -74,6 +74,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 const CollectionCreateForm = ({ open, onCreate, onCancel }) => {
+  const token = localStorage.getItem('token');
   const [name, SetName] = useState("");
   const [description, SetDescription] = useState("");
 
@@ -82,7 +83,10 @@ const CollectionCreateForm = ({ open, onCreate, onCancel }) => {
     let addData = { name: name, description: description };
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers :{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
       body: JSON.stringify(addData),
     };
     fetch("https://localhost:44301/api/categories/category", requestOptions)

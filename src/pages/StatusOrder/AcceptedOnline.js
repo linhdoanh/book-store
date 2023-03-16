@@ -65,6 +65,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function AcceptedOnlinePage() {
+  const token = localStorage.getItem('token');
   const {orderId} = useParams();
   const ordId = parseInt(orderId);
     // console.log(ordId);
@@ -92,12 +93,14 @@ export default function AcceptedOnlinePage() {
   const APIUrlOrder = "https://localhost:44301/api/orders/admin/order/";
 
   useEffect(() => {
-    
+    const headers2 = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
     const fetchDataOrderDetail = async () => {
       setLoading(true);
       const res = await fetch(
-        APIUrl + ordId
-      );
+        APIUrl + ordId, {headers2});
       const data = await res.json();
       setData(data.data);
       setLoading(false);
@@ -107,8 +110,7 @@ export default function AcceptedOnlinePage() {
     const fetchDataOrder = async () => {
       setLoading(true);
       const res = await fetch(
-        APIUrlOrder + ordId
-      );
+        APIUrlOrder + ordId, {headers2});
       const data = await res.json();
       setDataOrder(data.data);
       setLoading(false);
@@ -157,6 +159,10 @@ export default function AcceptedOnlinePage() {
     const response = await fetch('https://localhost:44301/api/orders/order/order-status/accepted-online-payment?orderId='+ordId, {
       method: 'PUT',
       body: JSON.stringify({ /* data to be sent in the request body */ }),
+      headers :{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
     })
     navigate('/dashboard/order');
   }

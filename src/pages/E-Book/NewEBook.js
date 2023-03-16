@@ -14,6 +14,7 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 const NewEBook = () => {
+  const token = localStorage.getItem('token');
   const [form] = Form.useForm();
   const [dataCate, SetDataCate] = useState([]);
   const [dataPub, SetDataPub] = useState([]);
@@ -146,7 +147,10 @@ const NewEBook = () => {
 
     const response = await fetch("https://localhost:44301/api/ebooks/ebook", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers :{
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
       body: JSON.stringify(addData),
     });
     const dataRes = await response.json();
@@ -162,7 +166,10 @@ const NewEBook = () => {
           "https://localhost:44301/api/book-images/book-image/ebook",
           {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers :{
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify(createBookImage),
           }
         );
@@ -212,6 +219,7 @@ const NewEBook = () => {
         rules={[{ required: true, message: "Please input ISBN" }]}
       >
         <Input
+          maxLength={10}
           placeholder="Type your ISBN"
           onChange={(e) => SetISBN(e.target.value)}
         />

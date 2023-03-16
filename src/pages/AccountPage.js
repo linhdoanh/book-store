@@ -72,6 +72,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function AccountPage() {
+  const token = localStorage.getItem('token');
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -95,7 +96,11 @@ export default function AccountPage() {
   const APIUrl = "https://localhost:44301/api/accounts";
 
   useEffect(() => {
-    fetch(APIUrl+"?page=1&pageSize=25")
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+    fetch(APIUrl+"?page=1&pageSize=25", {headers})
       .then((response) => {
         if (!response.ok) {
           throw new Error(
